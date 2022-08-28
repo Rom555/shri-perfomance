@@ -4,9 +4,11 @@ import './styles.css';
 makeTabs();
 makeMenu();
 
-function bind(nodes, event, handler) {
-  nodes.forEach((node) => {
-    node.addEventListener(event, handler);
+function bind(node, selector, event, handler) {
+  node.addEventListener(event, (e) => {
+    if (e.target.closest(`${selector}`)) {
+      handler(e);
+    }
   });
 }
 
@@ -14,7 +16,10 @@ function makeTabs() {
   const devices = document.querySelector('.main__devices');
 
   let selected = devices.querySelector('.section__tab_active').dataset.id;
-  const tabs = devices.querySelectorAll('.section__tab');
+  const tabs = devices.querySelector('.section__tabs');
+  const list = [].map.call(document.querySelectorAll('.section__tab'), function (el) {
+    return el.dataset.id;
+  });
   const select = devices.querySelector('.section__select');
 
   function selectTab(newId) {
@@ -47,12 +52,12 @@ function makeTabs() {
     selectTab(select.value);
   });
 
-  bind(tabs, 'click', (event) => {
+  bind(tabs, '.section__tab', 'click', (event) => {
     const newId = event.target.dataset.id;
     selectTab(newId);
   });
 
-  bind(tabs, 'keydown', (event) => {
+  bind(tabs, '.section__tab', 'keydown', (event) => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
       return;
     }
@@ -89,11 +94,12 @@ function makeMenu() {
   const menu = document.getElementById('header__menu');
   let expanded = false;
   const links = document.querySelector('.header__links');
+  const menuText = menu.querySelector('.header__menu-text');
 
   menu.addEventListener('click', () => {
     expanded = !expanded;
     menu.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    menu.querySelector('.header__menu-text').textContent = expanded ? 'Закрыть меню' : 'Открыть меню';
+    menuText.textContent = expanded ? 'Закрыть меню' : 'Открыть меню';
     links.classList.toggle('header__links_opened', expanded);
   });
 }
