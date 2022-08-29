@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Rom555/shri-perfomance#readme",
   "devDependencies": {
+    "@gfx/zopfli": "^1.0.15",
+    "compression-webpack-plugin": "^10.0.0",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "html-loader": "^4.1.0",
