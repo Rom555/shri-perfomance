@@ -70,5 +70,10 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+    splitChunks: {
+      // включаем все типы чанков
+      chunks: 'all',
+    },
+    runtimeChunk: true,
   },
 };
